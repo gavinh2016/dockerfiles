@@ -15,22 +15,21 @@ ENV PATH $CATALINA_HOME/bin:$PATH
 WORKDIR $CATALINA_HOME
 
 
-ENV TOMCAT_MAJOR_VERSION 7
-ENV TOMCAT_MINOR_VERSION 7.0.79
+ENV TOMCAT_MAJOR_VERSION 8
+ENV TOMCAT_MINOR_VERSION 8.5.42
 
-RUN wget -q https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR_VERSION}/v${TOMCAT_MINOR_VERSION}/bin/apache-tomcat-${TOMCAT_MINOR_VERSION}.tar.gz && \
-    wget -qO- https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR_VERSION}/v${TOMCAT_MINOR_VERSION}/bin/apache-tomcat-${TOMCAT_MINOR_VERSION}.tar.gz.md5 | md5sum -c - && \
+RUN wget -q http://mirror.bit.edu.cn/apache/tomcat/tomcat-${TOMCAT_MAJOR_VERSION}/v${TOMCAT_MINOR_VERSION}/bin/apache-tomcat-${TOMCAT_MINOR_VERSION}.tar.gz && \
     tar zxf apache-tomcat-*.tar.gz && \
     mv apache-tomcat-${TOMCAT_MINOR_VERSION}/* . && \
     rm -rf apache-tomcat-*
 
 ENV MAVEN_VERSION_MAJOR 3
-ENV MAVEN_VERSION_MINOR 5.2
+ENV MAVEN_VERSION_MINOR 3.6.1
 
-RUN wget http://archive.apache.org/dist/maven/maven-${MAVEN_VERSION_MAJOR}/${MAVEN_VERSION_MAJOR}.${MAVEN_VERSION_MINOR}/binaries/apache-maven-${MAVEN_VERSION_MAJOR}.${MAVEN_VERSION_MINOR}-bin.tar.gz && \
-    tar xvf apache-maven-${MAVEN_VERSION_MAJOR}.${MAVEN_VERSION_MINOR}-bin.tar.gz && \
-    rm apache-maven-${MAVEN_VERSION_MAJOR}.${MAVEN_VERSION_MINOR}-bin.tar.gz && \
-    mv apache-maven-${MAVEN_VERSION_MAJOR}.${MAVEN_VERSION_MINOR}  /usr/local/apache-maven
+RUN wget -q http://mirrors.tuna.tsinghua.edu.cn/apache/maven/maven-${MAVEN_VERSION_MAJOR}/${MAVEN_VERSION_MINOR}/binaries/apache-maven-${MAVEN_VERSION_MINOR}-bin.tar.gz && \
+    tar xvf apache-maven-*.tar.gz && \
+    rm apache-maven-*.tar.gz && \
+    mv apache-maven-${MAVEN_VERSION_MINOR}  /usr/local/apache-maven
 ENV M2_HOME=/usr/local/apache-maven
 ENV M2=$M2_HOME/bin
 ENV PATH=$M2:$PATH
